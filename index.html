@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>マナー道場</title>
+<style>
+  :root {
+    --bg: #fbfaf6; --fg: #23211d; --sub: #6b665d; --line: #dcd6cb;
+    --card: #ffffff; --accent: #2e6b4f; --ok: #1e7a3c; --ng: #b3261e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1b1c1e; --fg: #ece9e3; --sub: #a9a39a; --line: #45433f;
+      --card: #26272a; --accent: #84c7a3; --ok: #86d39a; --ng: #ff8f86;
+    }
+  }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 18px/1.7 system-ui, "Hiragino Sans", "Yu Gothic UI", sans-serif; }
+  header, main { max-width: 40rem; margin: 0 auto; padding: 0 16px; }
+  h1 { font-size: 1.4rem; color: var(--accent); margin: 20px 0 8px; }
+  .count { color: var(--sub); margin: 0; }
+  .question { font-size: 1.2rem; margin: 8px 0 16px; }
+  .choices { display: grid; gap: 10px; }
+  button { font: inherit; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; text-align: left; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  .ok { color: var(--ok); font-weight: bold; }
+  .ng { color: var(--ng); font-weight: bold; }
+  .explain { background: var(--card); border-left: 4px solid var(--accent); border-radius: 6px; padding: 10px 14px; }
+  .next { background: var(--accent); color: var(--bg); border-color: var(--accent); margin-top: 8px; }
+  .categories { display: grid; gap: 10px; }
+  .result { font-size: 1.4rem; }
+  .lead, .comment { color: var(--sub); }
+  .review { display: block; width: 100%; margin-top: 18px; border-color: var(--ng); }
+  .progress { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin: 2px 0 10px; }
+  .progress .bar { height: 100%; background: var(--accent); }
+  .rank { font-weight: bold; color: var(--accent); }
+  .next-rank { color: var(--sub); margin-top: -6px; }
+  /* 絵（content/art.js）。色は 絵の 中に ある */
+  .art { max-width: 480px; margin: 0 auto 10px; border-radius: 14px; overflow: hidden; background: #f4efe4; }
+  .art svg { display: block; width: 100%; height: auto; }
+  .scene { color: var(--sub); margin: 0 0 4px; }
+  .sensei { display: flex; align-items: center; gap: 12px; margin: 14px 0 6px; }
+  .sensei .art { width: 64px; flex: none; margin: 0; border-radius: 50%; }
+  .say { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; font-weight: bold; }
+  .intro .title { font-size: 1.3rem; margin: 6px 0; }
+  .story { line-height: 1.9; }
+</style>
+</head>
+<body>
+<header><h1>マナー道場</h1></header>
+<main id="app"></main>
+<!-- 読む順: 問題（content）→ 計算（core）→ 画面の文字（view）→ 画面とつなぐ（app は いちばん最後） -->
+<script src="content/art.js"></script>
+<script src="content/shokuji.js"></script>
+<script src="content/shokuba.js"></script>
+<script src="content/homon.js"></script>
+<script src="content/denwa.js"></script>
+<script src="js/core.js"></script>
+<script src="js/view.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
