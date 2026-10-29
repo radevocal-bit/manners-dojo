@@ -114,3 +114,28 @@ Manners.progressHtml = function (n, total) {
   }
   return '<div class="progress"><div class="bar" style="width: ' + width + '%"></div></div>';
 };
+
+Manners.bestHtml = function (list, best) {
+  var categories = Manners.categories(list);
+  var hasAny = false;
+  for (var i = 0; i < categories.length; i++) {
+    if (best.hasOwnProperty(categories[i])) {
+      hasAny = true;
+      break;
+    }
+  }
+  if (!hasAny) return '';
+
+  var html = '<div class="best"><p class="best-title">これまでの さいこう点</p><ul>';
+  for (var i = 0; i < categories.length; i++) {
+    var name = categories[i];
+    var escapedName = Manners.escapeHtml(name);
+    if (best.hasOwnProperty(name)) {
+      html += '<li>' + escapedName + ' ' + best[name] + '%</li>';
+    } else {
+      html += '<li>' + escapedName + ' —</li>';
+    }
+  }
+  html += '</ul></div>';
+  return html;
+};

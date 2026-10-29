@@ -4,13 +4,15 @@ var Manners = window.Manners || {};
 window.Manners = Manners;
 
 Manners.run = function (root, list, rand, storage, stories) {
+  var best = Manners.loadBest(storage);
   var state = null;
   var mistakes = Manners.loadMistakes(storage);
   var chosen = null;
+  var current = null;
 
   function render() {
     if (state === null) {
-      root.innerHTML = Manners.homeHtml(list) + Manners.reviewHtml(list, mistakes);
+      root.innerHTML = Manners.homeHtml(list) + Manners.reviewHtml(list, mistakes) + Manners.bestHtml(list, best);
       return;
     }
     var question = state.items[state.index];
@@ -30,8 +32,10 @@ Manners.run = function (root, list, rand, storage, stories) {
       var story = Manners.storyOf(stories, data.category);
       if (story) {
         chosen = data.category;
+        current = data.category;
         root.innerHTML = Manners.introHtml(story, Manners.byCategory(list, data.category).length);
       } else {
+        current = data.category;
         state = Manners.start(list, data.category, rand);
         render();
       }
@@ -44,18 +48,25 @@ Manners.run = function (root, list, rand, storage, stories) {
     } else if (data.action === 'next') {
       Manners.next(state);
       if (Manners.isDone(state)) {
+        if (current) {
+          best = Manners.updateBest(best, current, state.right, state.items.length);
+          Manners.saveBest(storage, best);
+          current = null;
+        }
         root.innerHTML = Manners.resultHtml(state.right, state.items.length);
       } else {
         render();
       }
     } else if (data.action === 'home') {
       state = null;
+      current = null;
       render();
     } else if (data.action === 'review') {
       state = Manners.startReview(list, mistakes, rand);
       render();
     } else if (data.action === 'begin') {
       state = Manners.startStory(list, chosen);
+      current = chosen;
       render();
     }
   });
@@ -70,4 +81,4 @@ Manners.storage = function () {
     return null;
   }
 };
-Manners.run(document.getElementById('app'), Manners.questions, Math.random, Manners.storage(), Manners.stories);
+Manners.run(document.getElementById('app'), Manners.questions, Math.random, Manners.storage(), Manners.stories, {});
