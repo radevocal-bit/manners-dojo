@@ -156,22 +156,3 @@ Manners.toNextRank = function (right, total) {
   return needed > 0 ? needed : 0;
 };
 
-Manners.toNextRank = function (right, total) {
-  if (total <= 0) return 0;
-  if (right < 0) right = 0;
-  if (right > total) right = total;
-  var currentRank = Manners.rankOf(right, total);
-  if (currentRank === '師範代') return 0;
-  var nextThreshold;
-  if (currentRank === '三段') {
-    nextThreshold = 1.0;
-  } else if (currentRank === '二段') {
-    nextThreshold = 0.8;
-  } else if (currentRank === '初段') {
-    nextThreshold = 0.6;
-  } else {
-    nextThreshold = 0.4;
-  }
-  var needed = Math.ceil(nextThreshold * total - right);
-  return needed > 0 ? needed : 0;
-};
