@@ -36,7 +36,12 @@ Manners.feedbackHtml = function (question, choice) {
 
 Manners.resultHtml = function (right, total) {
   var html = '<h2 class="result">' + total + '問中' + right + '問 正解</h2>';
-html += '<p class="percent">正解率 ' + Manners.percentOf(right, total) + '%</p>';
+  html += '<p class="percent">正解率 ' + Manners.percentOf(right, total) + '%</p>';
+  if (Manners.missOf(right, total) > 0) {
+    html += '<p class="miss">まちがい ' + Manners.missOf(right, total) + ' 問</p>';
+  } else {
+    html += '<p class="miss">まちがい なし</p>';
+  }
   html += '<p class="comment">';
   if (right === total) {
     html += 'すばらしい。全問正解です。';
