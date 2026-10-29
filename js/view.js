@@ -36,6 +36,7 @@ Manners.feedbackHtml = function (question, choice) {
 
 Manners.resultHtml = function (right, total) {
   var html = '<h2 class="result">' + total + '問中' + right + '問 正解</h2>';
+html += '<p class="percent">正解率 ' + Manners.percentOf(right, total) + '%</p>';
   html += '<p class="comment">';
   if (right === total) {
     html += 'すばらしい。全問正解です。';

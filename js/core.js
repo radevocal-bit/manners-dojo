@@ -156,3 +156,10 @@ Manners.toNextRank = function (right, total) {
   return needed > 0 ? needed : 0;
 };
 
+
+Manners.percentOf = function (right, total) {
+  if (total <= 0) return 0;
+  if (right < 0) right = 0;
+  if (right > total) right = total;
+  return Math.round((right / total) * 100);
+};
