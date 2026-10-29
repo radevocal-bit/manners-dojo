@@ -170,3 +170,36 @@ Manners.missOf = function (right, total) {
   if (right > total) right = total;
   return total - right;
 };
+
+
+Manners.updateBest = function (best, category, right, total) {
+  const newBest = { ...best };
+  if (total <= 0) return newBest;
+  const percent = Manners.percentOf(right, total);
+  if (!(category in newBest) || percent > newBest[category]) {
+    newBest[category] = percent;
+  }
+  return newBest;
+};
+
+Manners.loadBest = function (storage) {
+  try {
+    const data = storage ? storage.getItem('manners.best') : null;
+    if (!data) return {};
+    const parsed = JSON.parse(data);
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+      return parsed;
+    }
+    return {};
+  } catch (e) {
+    return {};
+  }
+};
+
+Manners.saveBest = function (storage, best) {
+  try {
+    if (storage) {
+      storage.setItem('manners.best', JSON.stringify(best));
+    }
+  } catch (e) {}
+};
