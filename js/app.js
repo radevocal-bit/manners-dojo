@@ -12,7 +12,7 @@ Manners.run = function (root, list, rand, storage, stories) {
 
   function render() {
     if (state === null) {
-      root.innerHTML = Manners.homeHtml(list) + Manners.reviewHtml(list, mistakes) + Manners.bestHtml(list, best);
+      root.innerHTML = Manners.homeHtml(list) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.bestHtml(list, best);
       return;
     }
     var question = state.items[state.index];

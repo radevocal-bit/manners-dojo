@@ -142,3 +142,9 @@ Manners.bestHtml = function (list, best) {
   html += '</ul></div>';
   return html;
 };
+
+Manners.suggestHtml = function (name) {
+  if (!name) return '';
+  var escapedName = Manners.escapeHtml(name);
+  return '<button class="suggest" data-category="' + escapedName + '">つぎの おすすめ: ' + escapedName + '</button>';
+};

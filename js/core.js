@@ -210,3 +210,38 @@ Manners.isNewBest = function (best, category, right, total) {
   const percent = Manners.percentOf(right, total);
   return !(category in best) || percent > best[category];
 };
+
+
+Manners.suggestCategory = function (list, best) {
+  if (list.length === 0) return '';
+  const cats = Manners.categories(list);
+  
+  // (1) Check for unsolved categories
+  for (const cat of cats) {
+    if (best[cat] === undefined) {
+      return cat;
+    }
+  }
+  
+  // (2) All categories are in best.
+  // Check if all are 100%
+  let all100 = true;
+  for (const cat of cats) {
+    if (best[cat] < 100) {
+      all100 = false;
+      break;
+    }
+  }
+  if (all100) return '';
+  
+  // Find minimum score
+  let minScore = Infinity;
+  let minCat = '';
+  for (const cat of cats) {
+    if (best[cat] < minScore) {
+      minScore = best[cat];
+      minCat = cat;
+    }
+  }
+  return minCat;
+};
