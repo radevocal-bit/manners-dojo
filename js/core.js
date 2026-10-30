@@ -203,3 +203,10 @@ Manners.saveBest = function (storage, best) {
     }
   } catch (e) {}
 };
+
+
+Manners.isNewBest = function (best, category, right, total) {
+  if (total <= 0) return false;
+  const percent = Manners.percentOf(right, total);
+  return !(category in best) || percent > best[category];
+};

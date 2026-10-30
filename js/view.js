@@ -34,9 +34,12 @@ Manners.feedbackHtml = function (question, choice) {
   return html;
 };
 
-Manners.resultHtml = function (right, total) {
+Manners.resultHtml = function (right, total, isNew) {
   var html = '<h2 class="result">' + total + '問中' + right + '問 正解</h2>';
   html += '<p class="percent">正解率 ' + Manners.percentOf(right, total) + '%</p>';
+  if (isNew) {
+    html += '<p class="new-best">新記録！</p>';
+  }
   if (Manners.missOf(right, total) > 0) {
     html += '<p class="miss">まちがい ' + Manners.missOf(right, total) + ' 問</p>';
   } else {

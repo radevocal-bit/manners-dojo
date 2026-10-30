@@ -26,6 +26,43 @@ Manners.run = function (root, list, rand, storage, stories) {
     root.innerHTML = html;
   }
 
+  function onNext() {
+    Manners.next(state);
+    if (Manners.isDone(state)) {
+      showResult();
+    } else {
+      render();
+    }
+  }
+
+  function showResult() {
+    var isNew = false;
+    if (current) {
+      isNew = Manners.isNewBest(best, current, state.right, state.items.length);
+      best = Manners.updateBest(best, current, state.right, state.items.length);
+      Manners.saveBest(storage, best);
+      current = null;
+    }
+    root.innerHTML = Manners.resultHtml(state.right, state.items.length, isNew);
+  }
+
+  function onHome() {
+    state = null;
+    current = null;
+    render();
+  }
+
+  function onReview() {
+    state = Manners.startReview(list, mistakes, rand);
+    render();
+  }
+
+  function onBegin() {
+    state = Manners.startStory(list, chosen);
+    current = chosen;
+    render();
+  }
+
   root.addEventListener('click', function (event) {
     var data = event.target.dataset;
     if (data.category) {
@@ -46,28 +83,13 @@ Manners.run = function (root, list, rand, storage, stories) {
       Manners.saveMistakes(storage, mistakes);
       render();
     } else if (data.action === 'next') {
-      Manners.next(state);
-      if (Manners.isDone(state)) {
-        if (current) {
-          best = Manners.updateBest(best, current, state.right, state.items.length);
-          Manners.saveBest(storage, best);
-          current = null;
-        }
-        root.innerHTML = Manners.resultHtml(state.right, state.items.length);
-      } else {
-        render();
-      }
+      onNext();
     } else if (data.action === 'home') {
-      state = null;
-      current = null;
-      render();
+      onHome();
     } else if (data.action === 'review') {
-      state = Manners.startReview(list, mistakes, rand);
-      render();
+      onReview();
     } else if (data.action === 'begin') {
-      state = Manners.startStory(list, chosen);
-      current = chosen;
-      render();
+      onBegin();
     }
   });
 
