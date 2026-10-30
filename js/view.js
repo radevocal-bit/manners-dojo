@@ -148,3 +148,8 @@ Manners.suggestHtml = function (name) {
   var escapedName = Manners.escapeHtml(name);
   return '<button class="suggest" data-category="' + escapedName + '">つぎの おすすめ: ' + escapedName + '</button>';
 };
+
+Manners.averageHtml = function (avg) {
+  if (avg === null) return '';
+  return '<p class="average">平均 ' + avg + '%（総合: ' + Manners.rankOf(avg, 100) + '）</p>';
+};

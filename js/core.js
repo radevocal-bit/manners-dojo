@@ -245,3 +245,19 @@ Manners.suggestCategory = function (list, best) {
   }
   return minCat;
 };
+
+
+Manners.averageBest = function (list, best) {
+  const categories = Manners.categories(list);
+  let sum = 0;
+  let count = 0;
+  for (let i = 0; i < categories.length; i++) {
+    const cat = categories[i];
+    if (best.hasOwnProperty(cat)) {
+      sum += best[cat];
+      count++;
+    }
+  }
+  if (count === 0) return null;
+  return Math.round(sum / count);
+};
