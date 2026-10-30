@@ -43,7 +43,7 @@ Manners.run = function (root, list, rand, storage, stories) {
       Manners.saveBest(storage, best);
       current = null;
     }
-    root.innerHTML = Manners.resultHtml(state.right, state.items.length, isNew);
+    root.innerHTML = Manners.resultHtml(state.right, state.items.length, isNew) + Manners.wrongListHtml(Manners.wrongOf(state));
   }
 
   function onHome() {

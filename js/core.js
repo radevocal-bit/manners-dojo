@@ -54,6 +54,9 @@ Manners.answer = function (state, choice) {
   state.picked = choice;
   if (Manners.isCorrect(state.items[state.index], choice)) {
     state.right++;
+  } else {
+    if (!state.wrong) state.wrong = [];
+    state.wrong.push(state.items[state.index]);
   }
 };
 
@@ -260,4 +263,8 @@ Manners.averageBest = function (list, best) {
   }
   if (count === 0) return null;
   return Math.round(sum / count);
+};
+
+Manners.wrongOf = function (state) {
+  return state.wrong ? [...state.wrong] : [];
 };

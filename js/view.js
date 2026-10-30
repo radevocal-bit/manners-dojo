@@ -153,3 +153,14 @@ Manners.averageHtml = function (avg) {
   if (avg === null) return '';
   return '<p class="average">平均 ' + avg + '%（総合: ' + Manners.rankOf(avg, 100) + '）</p>';
 };
+
+Manners.wrongListHtml = function (items) {
+  if (items.length === 0) return '';
+  var html = '<div class="wrong"><p class="wrong-title">まちがえた 問題</p><ul>';
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    html += '<li>' + Manners.escapeHtml(item.question) + '<br>→ ' + Manners.escapeHtml(item.choices[item.answer]) + '</li>';
+  }
+  html += '</ul></div>';
+  return html;
+};
