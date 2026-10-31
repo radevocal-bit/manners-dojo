@@ -63,25 +63,33 @@ Manners.run = function (root, list, rand, storage, stories) {
     render();
   }
 
+  function onCategory(name) {
+    var story = Manners.storyOf(stories, name);
+    if (story) {
+      chosen = name;
+      current = name;
+      root.innerHTML = Manners.introHtml(story, Manners.byCategory(list, name).length);
+    } else {
+      current = name;
+      state = Manners.start(list, name, rand);
+      render();
+    }
+  }
+
+  function onChoice(index) {
+    Manners.answer(state, index);
+    var question = state.items[state.index];
+    mistakes = Manners.updateMistakes(mistakes, question.id, Manners.isCorrect(question, state.picked));
+    Manners.saveMistakes(storage, mistakes);
+    render();
+  }
+
   root.addEventListener('click', function (event) {
     var data = event.target.dataset;
     if (data.category) {
-      var story = Manners.storyOf(stories, data.category);
-      if (story) {
-        chosen = data.category;
-        current = data.category;
-        root.innerHTML = Manners.introHtml(story, Manners.byCategory(list, data.category).length);
-      } else {
-        current = data.category;
-        state = Manners.start(list, data.category, rand);
-        render();
-      }
+      onCategory(data.category);
     } else if (data.choice) {
-      Manners.answer(state, Number(data.choice));
-      var question = state.items[state.index];
-      mistakes = Manners.updateMistakes(mistakes, question.id, Manners.isCorrect(question, state.picked));
-      Manners.saveMistakes(storage, mistakes);
-      render();
+      onChoice(Number(data.choice));
     } else if (data.action === 'next') {
       onNext();
     } else if (data.action === 'home') {

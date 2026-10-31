@@ -159,7 +159,11 @@ Manners.wrongListHtml = function (items) {
   var html = '<div class="wrong"><p class="wrong-title">まちがえた 問題</p><ul>';
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
-    html += '<li>' + Manners.escapeHtml(item.question) + '<br>→ ' + Manners.escapeHtml(item.choices[item.answer]) + '</li>';
+    html += '<li>' + Manners.escapeHtml(item.question) + '<br>→ ' + Manners.escapeHtml(item.choices[item.answer]);
+    if (item.explain) {
+      html += '<br><span class="why">' + Manners.escapeHtml(item.explain) + '</span>';
+    }
+    html += '</li>';
   }
   html += '</ul></div>';
   return html;
