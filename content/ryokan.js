@@ -61,5 +61,55 @@ Manners.questions.push(
     choices: ['湯船に 入れて 体を 洗う', '湯船には 入れない（頭に のせる か 外に 置く）', '湯船の 中で しぼる'],
     answer: 1,
     explain: 'タオルを 湯船に 入れると、お湯が よごれます。'
+  },
+  {
+    id: 'ryokan-6',
+    category: '温泉旅館',
+    scene: '大浴場。髪が 長い。',
+    art: 'ryokan',
+    question: '髪は？',
+    choices: ['お湯に ついても 気に しない', 'ゴムなどで まとめる', 'お湯の 中で 洗う'],
+    answer: 1,
+    explain: '髪が お湯に つかない ように します。'
+  },
+  {
+    id: 'ryokan-7',
+    category: '温泉旅館',
+    scene: '大浴場が すいて いる。',
+    art: 'ryokan',
+    question: 'どう する？',
+    choices: ['ゆったり 静かに つかる', '湯船で 泳ぐ', '友だちと 大声で 話す'],
+    answer: 0,
+    explain: '大浴場は みんなで 使う 所です。'
+  },
+  {
+    id: 'ryokan-8',
+    category: '温泉旅館',
+    scene: 'お風呂から 上がる。',
+    art: 'ryokan',
+    question: '脱衣所に もどる 前に？',
+    choices: ['ぬれた まま もどる', '脱衣所の まん中で 体を ふく', '浴室で 体を ふいてから もどる'],
+    answer: 2,
+    explain: '脱衣所の 床が ぬれず、ほかの 人が すべりません。'
+  },
+  {
+    id: 'ryokan-9',
+    category: '温泉旅館',
+    scene: '夜、部屋で 友だちと 話して いる。となりの 部屋にも お客さんが いる。',
+    art: 'ryokan',
+    question: 'どう する？',
+    choices: ['声を 小さく する', 'テレビの 音を 大きく する', '廊下に 出て さわぐ'],
+    answer: 0,
+    explain: 'かべが うすい 部屋も あります。夜は 静かに すごします。'
+  },
+  {
+    id: 'ryokan-10',
+    category: '温泉旅館',
+    scene: '朝ごはんの 時間が 決まって いる。',
+    art: 'ryokan',
+    question: 'どう する？',
+    choices: ['好きな 時間に 行く', '決まった 時間に 行く', '連絡せずに 行かない'],
+    answer: 1,
+    explain: '旅館の 人は 時間に 合わせて 料理を 用意して います。'
   }
 );
