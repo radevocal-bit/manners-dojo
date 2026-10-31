@@ -305,3 +305,13 @@ Manners.startMix = function (list, n, rand) {
     picked: null
   };
 };
+
+Manners.keyToChoice = function (key, count) {
+  if (/^[1-9]$/.test(key)) {
+    const index = Number(key) - 1;
+    if (index < count) {
+      return index;
+    }
+  }
+  return -1;
+};

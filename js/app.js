@@ -3,7 +3,7 @@
 var Manners = window.Manners || {};
 window.Manners = Manners;
 
-Manners.run = function (root, list, rand, storage, stories) {
+Manners.run = function (root, list, rand, storage, stories, keys) {
   var best = Manners.loadBest(storage);
   var state = null;
   var mistakes = Manners.loadMistakes(storage);
@@ -90,6 +90,20 @@ Manners.run = function (root, list, rand, storage, stories) {
     render();
   }
 
+  function onKey(event) {
+    if (state === null || Manners.isDone(state)) {
+      return;
+    }
+    if (state.picked === null) {
+      var choice = Manners.keyToChoice(event.key, state.items[state.index].choices.length);
+      if (choice >= 0) {
+        onChoice(choice);
+      }
+    } else if (event.key === 'Enter') {
+      onNext();
+    }
+  }
+
   root.addEventListener('click', function (event) {
     var data = event.target.dataset;
     if (data.category) {
@@ -109,6 +123,10 @@ Manners.run = function (root, list, rand, storage, stories) {
     }
   });
 
+  if (keys && keys.addEventListener) {
+    keys.addEventListener('keydown', onKey);
+  }
+
   render();
 };
 
@@ -119,4 +137,4 @@ Manners.storage = function () {
     return null;
   }
 };
-Manners.run(document.getElementById('app'), Manners.questions, Math.random, Manners.storage(), Manners.stories, {});
+Manners.run(document.getElementById('app'), Manners.questions, Math.random, Manners.storage(), Manners.stories, document);
