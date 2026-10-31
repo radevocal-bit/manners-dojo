@@ -23,13 +23,14 @@ Manners.questionHtml = function (question, n, total) {
 };
 
 Manners.feedbackHtml = function (question, choice) {
-  var html = '';
+  var html = '<div class="feedback" aria-live="polite">';
   if (Manners.isCorrect(question, choice)) {
     html += '<p class="ok">○ 正解</p>';
   } else {
     html += '<p class="ng">× ざんねん。正しいのは「' + Manners.escapeHtml(question.choices[question.answer]) + '」</p>';
   }
   html += '<p class="explain">' + Manners.escapeHtml(question.explain) + '</p>';
+  html += '</div>';
   html += '<button class="next" data-action="next">つぎへ</button>';
   return html;
 };
