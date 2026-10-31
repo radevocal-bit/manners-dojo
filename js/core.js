@@ -218,14 +218,14 @@ Manners.isNewBest = function (best, category, right, total) {
 Manners.suggestCategory = function (list, best) {
   if (list.length === 0) return '';
   const cats = Manners.categories(list);
-  
+
   // (1) Check for unsolved categories
   for (const cat of cats) {
     if (best[cat] === undefined) {
       return cat;
     }
   }
-  
+
   // (2) All categories are in best.
   // Check if all are 100%
   let all100 = true;
@@ -236,7 +236,7 @@ Manners.suggestCategory = function (list, best) {
     }
   }
   if (all100) return '';
-  
+
   // Find minimum score
   let minScore = Infinity;
   let minCat = '';
@@ -267,4 +267,41 @@ Manners.averageBest = function (list, best) {
 
 Manners.wrongOf = function (state) {
   return state.wrong ? [...state.wrong] : [];
+};
+
+
+Manners.startMix = function (list, n, rand) {
+  const categories = Manners.shuffle(Manners.categories(list), rand);
+  const categoryItems = categories.map(cat => Manners.shuffle(Manners.byCategory(list, cat), rand));
+
+  const items = [];
+  let round = 0;
+  let finished = false;
+
+  while (items.length < n && !finished) {
+    let addedInThisRound = 0;
+    for (let i = 0; i < categories.length; i++) {
+      const catIdx = i;
+      const itemIdx = round;
+      if (categoryItems[catIdx] && categoryItems[catIdx][itemIdx]) {
+        items.push(categoryItems[catIdx][itemIdx]);
+        addedInThisRound++;
+        if (items.length === n) {
+          finished = true;
+          break;
+        }
+      }
+    }
+    if (addedInThisRound === 0) {
+      finished = true;
+    }
+    round++;
+  }
+
+  return {
+    items: items,
+    index: 0,
+    right: 0,
+    picked: null
+  };
 };

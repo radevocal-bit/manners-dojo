@@ -12,7 +12,7 @@ Manners.run = function (root, list, rand, storage, stories) {
 
   function render() {
     if (state === null) {
-      root.innerHTML = Manners.homeHtml(list) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
+      root.innerHTML = Manners.homeHtml(list) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
       return;
     }
     var question = state.items[state.index];
@@ -57,6 +57,12 @@ Manners.run = function (root, list, rand, storage, stories) {
     render();
   }
 
+  function onMix() {
+    state = Manners.startMix(list, 10, rand);
+    current = null;
+    render();
+  }
+
   function onBegin() {
     state = Manners.startStory(list, chosen);
     current = chosen;
@@ -98,6 +104,8 @@ Manners.run = function (root, list, rand, storage, stories) {
       onReview();
     } else if (data.action === 'begin') {
       onBegin();
+    } else if (data.action === 'mix') {
+      onMix();
     }
   });
 

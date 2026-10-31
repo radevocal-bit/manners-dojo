@@ -168,3 +168,11 @@ Manners.wrongListHtml = function (items) {
   html += '</ul></div>';
   return html;
 };
+
+Manners.mixHtml = function (list) {
+  if (list.length === 0) {
+    return '';
+  }
+  var n = Math.min(list.length, 10);
+  return '<button class="mix" data-action="mix">腕だめし（全部の 分野から ' + n + ' 問）</button>';
+};
