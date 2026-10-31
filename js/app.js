@@ -7,12 +7,13 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
   var best = Manners.loadBest(storage);
   var state = null;
   var mistakes = Manners.loadMistakes(storage);
+  var done = Manners.loadDone(storage);
   var chosen = null;
   var current = null;
 
   function render() {
     if (state === null) {
-      root.innerHTML = Manners.homeHtml(list) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
+      root.innerHTML = Manners.homeHtml(list) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list) + Manners.doneHtml(list, done) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
       return;
     }
     var question = state.items[state.index];
@@ -88,6 +89,8 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
     var question = state.items[state.index];
     mistakes = Manners.updateMistakes(mistakes, question.id, Manners.isCorrect(question, state.picked));
     Manners.saveMistakes(storage, mistakes);
+    done = Manners.updateDone(done, question.id, Manners.isCorrect(question, state.picked));
+    Manners.saveDone(storage, done);
     render();
   }
 

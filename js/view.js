@@ -182,3 +182,15 @@ Manners.retryHtml = function (name) {
   var escapedName = Manners.escapeHtml(name);
   return '<button class="retry" data-category="' + escapedName + '">' + escapedName + 'を もう一度</button>';
 };
+
+Manners.doneHtml = function (list, done) {
+  if (list.length === 0) return '';
+  var n = list.length;
+  var m = 0;
+  for (var i = 0; i < n; i++) {
+    if (done.indexOf(list[i].id) !== -1) {
+      m++;
+    }
+  }
+  return '<p class="done">道場の 進み: 全部 ' + n + ' 問の うち ' + m + ' 問 正解</p>';
+};

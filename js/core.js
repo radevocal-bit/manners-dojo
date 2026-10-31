@@ -315,3 +315,27 @@ Manners.keyToChoice = function (key, count) {
   }
   return -1;
 };
+
+Manners.updateDone = function (done, id, ok) {
+  const newDone = done.slice();
+  if (ok && newDone.indexOf(id) === -1) {
+    newDone.push(id);
+  }
+  return newDone;
+};
+
+Manners.loadDone = function (storage) {
+  try {
+    const data = storage ? storage.getItem('manners.done') : null;
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+};
+
+Manners.saveDone = function (storage, done) {
+  try {
+    storage.setItem('manners.done', JSON.stringify(done));
+  } catch (e) {}
+};
