@@ -176,3 +176,9 @@ Manners.mixHtml = function (list) {
   var n = Math.min(list.length, 10);
   return '<button class="mix" data-action="mix">腕だめし（全部の 分野から ' + n + ' 問）</button>';
 };
+
+Manners.retryHtml = function (name) {
+  if (!name) return '';
+  var escapedName = Manners.escapeHtml(name);
+  return '<button class="retry" data-category="' + escapedName + '">' + escapedName + 'を もう一度</button>';
+};

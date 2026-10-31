@@ -37,13 +37,14 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
 
   function showResult() {
     var isNew = false;
+    var name = current;
     if (current) {
       isNew = Manners.isNewBest(best, current, state.right, state.items.length);
       best = Manners.updateBest(best, current, state.right, state.items.length);
       Manners.saveBest(storage, best);
       current = null;
     }
-    root.innerHTML = Manners.resultHtml(state.right, state.items.length, isNew) + Manners.wrongListHtml(Manners.wrongOf(state));
+    root.innerHTML = Manners.resultHtml(state.right, state.items.length, isNew) + Manners.retryHtml(name) + Manners.wrongListHtml(Manners.wrongOf(state));
   }
 
   function onHome() {
