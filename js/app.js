@@ -14,7 +14,7 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
 
   function render() {
     if (state === null) {
-      root.innerHTML = Manners.homeHtml(list) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list) + Manners.doneHtml(list, done) + Manners.dailyHtml(list[Manners.dailyIndex(list, day)]) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
+      root.innerHTML = Manners.homeHtml(list, done) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list) + Manners.doneHtml(list, done) + Manners.dailyHtml(list[Manners.dailyIndex(list, day)]) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
       return;
     }
     var question = state.items[state.index];

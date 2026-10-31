@@ -63,15 +63,24 @@ Manners.resultHtml = function (right, total, isNew) {
   return html;
 };
 
-Manners.homeHtml = function (list) {
+Manners.homeHtml = function (list, done) {
   var html = '<p class="lead">分野を選んでください。</p>';
   html += '<div class="categories">';
   var categories = Manners.categories(list);
   for (var i = 0; i < categories.length; i++) {
     var name = categories[i];
     var escapedName = Manners.escapeHtml(name);
-    var count = Manners.byCategory(list, name).length;
-    html += '<button class="category" data-category="' + escapedName + '">' + escapedName + '（' + count + '問）</button>';
+    var categoryItems = Manners.byCategory(list, name);
+    var count = categoryItems.length;
+    var text = escapedName + '（' + count + '問';
+    if (done) {
+      var correctCount = categoryItems.filter(function(item) {
+        return done.includes(item.id);
+      }).length;
+      text += '・正解 ' + correctCount;
+    }
+    text += '）';
+    html += '<button class="category" data-category="' + escapedName + '">' + text + '</button>';
   }
   html += '</div>';
   return html;
