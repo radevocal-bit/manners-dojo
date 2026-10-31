@@ -339,3 +339,30 @@ Manners.saveDone = function (storage, done) {
     storage.setItem('manners.done', JSON.stringify(done));
   } catch (e) {}
 };
+
+Manners.today = function (date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+};
+
+Manners.dailyIndex = function (list, day) {
+  if (list.length === 0) return -1;
+  let sum = 0;
+  for (let i = 0; i < day.length; i++) {
+    sum += day.charCodeAt(i);
+  }
+  return sum % list.length;
+};
+
+Manners.startDaily = function (list, day) {
+  const index = Manners.dailyIndex(list, day);
+  const items = index === -1 ? [] : [list[index]];
+  return {
+    items: items,
+    index: 0,
+    right: 0,
+    picked: null
+  };
+};

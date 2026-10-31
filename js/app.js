@@ -8,12 +8,13 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
   var state = null;
   var mistakes = Manners.loadMistakes(storage);
   var done = Manners.loadDone(storage);
+  var day = Manners.today(new Date());
   var chosen = null;
   var current = null;
 
   function render() {
     if (state === null) {
-      root.innerHTML = Manners.homeHtml(list) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list) + Manners.doneHtml(list, done) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
+      root.innerHTML = Manners.homeHtml(list) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list) + Manners.doneHtml(list, done) + Manners.dailyHtml(list[Manners.dailyIndex(list, day)]) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
       return;
     }
     var question = state.items[state.index];
@@ -61,6 +62,12 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
 
   function onMix() {
     state = Manners.startMix(list, 10, rand);
+    current = null;
+    render();
+  }
+
+  function onDaily() {
+    state = Manners.startDaily(list, day);
     current = null;
     render();
   }
@@ -124,6 +131,8 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
       onBegin();
     } else if (data.action === 'mix') {
       onMix();
+    } else if (data.action === 'daily') {
+      onDaily();
     }
   });
 

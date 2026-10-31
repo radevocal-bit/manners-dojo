@@ -195,3 +195,10 @@ Manners.doneHtml = function (list, done) {
   }
   return '<p class="done">道場の 進み: 全部 ' + n + ' 問の うち ' + m + ' 問 正解</p>';
 };
+
+Manners.dailyHtml = function (question) {
+  if (!question) {
+    return '';
+  }
+  return '<button class="daily" data-action="daily">今日の 1 問（' + Manners.escapeHtml(question.category) + '）</button>';
+};
