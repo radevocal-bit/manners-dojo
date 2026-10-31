@@ -211,3 +211,8 @@ Manners.dailyHtml = function (question) {
   }
   return '<button class="daily" data-action="daily">今日の 1 問（' + Manners.escapeHtml(question.category) + '）</button>';
 };
+
+Manners.streakHtml = function (n) {
+  if (n === 0) return '';
+  return '<p class="streak">' + n + ' 日 続けて 練習中</p>';
+};

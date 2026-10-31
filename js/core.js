@@ -39,7 +39,6 @@ Manners.shuffle = function (list, rand) {
   return copy;
 };
 
-
 Manners.start = function (list, category, rand) {
   return {
     items: Manners.shuffle(Manners.byCategory(list, category), rand),
@@ -76,7 +75,6 @@ Manners.updateMistakes = function (ids, id, ok) {
   }
   return newIds;
 };
-
 
 Manners.loadMistakes = function (storage) {
   try {
@@ -138,7 +136,6 @@ Manners.rankOf = function (right, total) {
   return '見習い';
 };
 
-
 Manners.toNextRank = function (right, total) {
   if (total <= 0) return 0;
   if (right < 0) right = 0;
@@ -159,7 +156,6 @@ Manners.toNextRank = function (right, total) {
   return needed > 0 ? needed : 0;
 };
 
-
 Manners.percentOf = function (right, total) {
   if (total <= 0) return 0;
   if (right < 0) right = 0;
@@ -173,7 +169,6 @@ Manners.missOf = function (right, total) {
   if (right > total) right = total;
   return total - right;
 };
-
 
 Manners.updateBest = function (best, category, right, total) {
   const newBest = { ...best };
@@ -207,13 +202,11 @@ Manners.saveBest = function (storage, best) {
   } catch (e) {}
 };
 
-
 Manners.isNewBest = function (best, category, right, total) {
   if (total <= 0) return false;
   const percent = Manners.percentOf(right, total);
   return !(category in best) || percent > best[category];
 };
-
 
 Manners.suggestCategory = function (list, best) {
   if (list.length === 0) return '';
@@ -249,7 +242,6 @@ Manners.suggestCategory = function (list, best) {
   return minCat;
 };
 
-
 Manners.averageBest = function (list, best) {
   const categories = Manners.categories(list);
   let sum = 0;
@@ -268,7 +260,6 @@ Manners.averageBest = function (list, best) {
 Manners.wrongOf = function (state) {
   return state.wrong ? [...state.wrong] : [];
 };
-
 
 Manners.startMix = function (list, n, rand) {
   const categories = Manners.shuffle(Manners.categories(list), rand);
@@ -365,4 +356,46 @@ Manners.startDaily = function (list, day) {
     right: 0,
     picked: null
   };
+};
+
+Manners.updateDays = function (days, day) {
+  const newDays = [...days];
+  if (newDays.indexOf(day) === -1) {
+    newDays.push(day);
+  }
+  return newDays;
+};
+
+Manners.loadDays = function (storage) {
+  try {
+    const data = storage ? storage.getItem('manners.days') : null;
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+};
+
+Manners.saveDays = function (storage, days) {
+  try {
+    if (storage) {
+      storage.setItem('manners.days', JSON.stringify(days));
+    }
+  } catch (e) {}
+};
+
+Manners.streakOf = function (days, day) {
+  const [y, m, d] = day.split('-').map(Number);
+  const date = new Date(y, m - 1, d);
+  let count = 0;
+
+  if (!days.includes(Manners.today(date))) {
+    date.setDate(date.getDate() - 1);
+  }
+
+  while (days.includes(Manners.today(date))) {
+    count++;
+    date.setDate(date.getDate() - 1);
+  }
+  return count;
 };
