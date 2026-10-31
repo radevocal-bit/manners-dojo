@@ -10,12 +10,14 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
   var done = Manners.loadDone(storage);
   var day = Manners.today(new Date());
   var days = Manners.loadDays(storage);
+  var mixBest = Manners.loadMixBest(storage);
+  var mixing = false;
   var chosen = null;
   var current = null;
 
   function render() {
     if (state === null) {
-      root.innerHTML = Manners.homeHtml(list, done) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list) + Manners.doneHtml(list, done) + Manners.dailyHtml(list[Manners.dailyIndex(list, day)]) + Manners.streakHtml(Manners.streakOf(days, day)) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
+      root.innerHTML = Manners.homeHtml(list, done) + Manners.suggestHtml(Manners.suggestCategory(list, best)) + Manners.reviewHtml(list, mistakes) + Manners.mixHtml(list, mixBest) + Manners.doneHtml(list, done) + Manners.dailyHtml(list[Manners.dailyIndex(list, day)]) + Manners.streakHtml(Manners.streakOf(days, day)) + Manners.averageHtml(Manners.averageBest(list, best)) + Manners.bestHtml(list, best);
       return;
     }
     var question = state.items[state.index];
@@ -47,6 +49,11 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
       Manners.saveBest(storage, best);
       current = null;
     }
+    if (mixing) {
+      mixBest = Manners.updateMixBest(mixBest, state.right);
+      Manners.saveMixBest(storage, mixBest);
+      mixing = false;
+    }
     root.innerHTML = Manners.resultHtml(state.right, state.items.length, isNew) + Manners.retryHtml(name) + Manners.wrongListHtml(Manners.wrongOf(state));
   }
 
@@ -62,6 +69,7 @@ Manners.run = function (root, list, rand, storage, stories, keys) {
   }
 
   function onMix() {
+    mixing = true;
     state = Manners.startMix(list, 10, rand);
     current = null;
     render();

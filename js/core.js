@@ -399,3 +399,25 @@ Manners.streakOf = function (days, day) {
   }
   return count;
 };
+
+Manners.updateMixBest = function (best, right) {
+  return right > best ? right : best;
+};
+
+Manners.loadMixBest = function (storage) {
+  try {
+    const num = Number(storage.getItem('manners.mixbest'));
+    if (Number.isInteger(num) && num > 0) {
+      return num;
+    }
+    return 0;
+  } catch (e) {
+    return 0;
+  }
+};
+
+Manners.saveMixBest = function (storage, n) {
+  try {
+    storage.setItem('manners.mixbest', String(n));
+  } catch (e) {}
+};
