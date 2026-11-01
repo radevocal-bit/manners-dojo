@@ -36,15 +36,15 @@ Manners.feedbackHtml = function (question, choice) {
 };
 
 Manners.resultHtml = function (right, total, isNew) {
-  var html = '<h2 class="result">' + total + '問中' + right + '問 正解</h2>';
-  html += '<p class="percent">正解率 ' + Manners.percentOf(right, total) + '%</p>';
+  var html = '<h2 class="result">' + total + '問中' + right + '問正解</h2>';
+  html += '<p class="percent">正解率' + Manners.percentOf(right, total) + '%</p>';
   if (isNew) {
     html += '<p class="new-best">新記録！</p>';
   }
   if (Manners.missOf(right, total) > 0) {
-    html += '<p class="miss">まちがい ' + Manners.missOf(right, total) + ' 問</p>';
+    html += '<p class="miss">まちがい' + Manners.missOf(right, total) + '問</p>';
   } else {
-    html += '<p class="miss">まちがい なし</p>';
+    html += '<p class="miss">まちがいなし</p>';
   }
   html += '<p class="comment">';
   if (right === total) {
@@ -57,7 +57,7 @@ Manners.resultHtml = function (right, total, isNew) {
   html += '</p>';
   html += '<p class="rank">段位: ' + Manners.rankOf(right, total) + '</p>';
   if (Manners.toNextRank(right, total) > 0) {
-    html += '<p class="next-rank">次の 段位まで あと ' + Manners.toNextRank(right, total) + ' 問</p>';
+    html += '<p class="next-rank">次の段位まであと' + Manners.toNextRank(right, total) + '問</p>';
   }
   html += '<button class="next" data-action="home">分野を選ぶ</button>';
   return html;
@@ -77,7 +77,7 @@ Manners.homeHtml = function (list, done) {
       var correctCount = categoryItems.filter(function(item) {
         return done.includes(item.id);
       }).length;
-      text += '・正解 ' + correctCount;
+      text += '・正解' + correctCount;
     }
     text += '）';
     html += '<button class="category" data-category="' + escapedName + '">' + text + '</button>';
@@ -91,7 +91,7 @@ Manners.reviewHtml = function (list, mistakes) {
   if (count === 0) {
     return '';
   }
-  return '<button class="review" data-action="review">まちがえた問題を もう一度（' + count + '問）</button>';
+  return '<button class="review" data-action="review">まちがえた問題をもう一度（' + count + '問）</button>';
 };
 
 
@@ -110,7 +110,7 @@ Manners.sceneHtml = function (question) {
 };
 
 Manners.senseiHtml = function (ok) {
-  var message = ok ? 'おみごと。' : 'おしい。ここで 覚えよう。';
+  var message = ok ? 'おみごと。' : 'おしい。ここで覚えよう。';
   return '<div class="sensei">' + Manners.artHtml('sensei') + '<p class="say">' + message + '</p></div>';
 };
 
@@ -139,7 +139,7 @@ Manners.bestHtml = function (list, best) {
   }
   if (!hasAny) return '';
 
-  var html = '<div class="best"><p class="best-title">これまでの さいこう点</p><ul>';
+  var html = '<div class="best"><p class="best-title">これまでのさいこう点</p><ul>';
   for (var i = 0; i < categories.length; i++) {
     var name = categories[i];
     var escapedName = Manners.escapeHtml(name);
@@ -156,17 +156,17 @@ Manners.bestHtml = function (list, best) {
 Manners.suggestHtml = function (name) {
   if (!name) return '';
   var escapedName = Manners.escapeHtml(name);
-  return '<button class="suggest" data-category="' + escapedName + '">つぎの おすすめ: ' + escapedName + '</button>';
+  return '<button class="suggest" data-category="' + escapedName + '">つぎのおすすめ: ' + escapedName + '</button>';
 };
 
 Manners.averageHtml = function (avg) {
   if (avg === null) return '';
-  return '<p class="average">平均 ' + avg + '%（総合: ' + Manners.rankOf(avg, 100) + '）</p>';
+  return '<p class="average">平均' + avg + '%（総合: ' + Manners.rankOf(avg, 100) + '）</p>';
 };
 
 Manners.wrongListHtml = function (items) {
   if (items.length === 0) return '';
-  var html = '<div class="wrong"><p class="wrong-title">まちがえた 問題</p><ul>';
+  var html = '<div class="wrong"><p class="wrong-title">まちがえた問題</p><ul>';
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
     html += '<li>' + Manners.escapeHtml(item.question) + '<br>→ ' + Manners.escapeHtml(item.choices[item.answer]);
@@ -184,9 +184,9 @@ Manners.mixHtml = function (list, mixBest) {
     return '';
   }
   var n = Math.min(list.length, 10);
-  var text = '<button class="mix" data-action="mix">腕だめし（全部の 分野から ' + n + ' 問';
+  var text = '<button class="mix" data-action="mix">腕だめし（全部の分野から' + n + '問';
   if (mixBest > 0) {
-    text += '・さいこう ' + mixBest + ' 問';
+    text += '・さいこう' + mixBest + '問';
   }
   text += '）</button>';
   return text;
@@ -195,7 +195,7 @@ Manners.mixHtml = function (list, mixBest) {
 Manners.retryHtml = function (name) {
   if (!name) return '';
   var escapedName = Manners.escapeHtml(name);
-  return '<button class="retry" data-category="' + escapedName + '">' + escapedName + 'を もう一度</button>';
+  return '<button class="retry" data-category="' + escapedName + '">' + escapedName + 'をもう一度</button>';
 };
 
 Manners.doneHtml = function (list, done) {
@@ -207,17 +207,17 @@ Manners.doneHtml = function (list, done) {
       m++;
     }
   }
-  return '<p class="done">道場の 進み: 全部 ' + n + ' 問の うち ' + m + ' 問 正解</p>';
+  return '<p class="done">道場の進み: 全部' + n + '問のうち' + m + '問正解</p>';
 };
 
 Manners.dailyHtml = function (question) {
   if (!question) {
     return '';
   }
-  return '<button class="daily" data-action="daily">今日の 1 問（' + Manners.escapeHtml(question.category) + '）</button>';
+  return '<button class="daily" data-action="daily">今日の1問（' + Manners.escapeHtml(question.category) + '）</button>';
 };
 
 Manners.streakHtml = function (n) {
   if (n === 0) return '';
-  return '<p class="streak">' + n + ' 日 続けて 練習中</p>';
+  return '<p class="streak">' + n + '日続けて練習中</p>';
 };

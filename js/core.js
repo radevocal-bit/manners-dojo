@@ -421,3 +421,36 @@ Manners.saveMixBest = function (storage, n) {
     storage.setItem('manners.mixbest', String(n));
   } catch (e) {}
 };
+
+Manners.groupedCategories = function (list, groups) {
+  var cats = Manners.categories(list);
+  var all = Array.isArray(groups) ? groups : [];
+  var result = [];
+  var used = [];
+
+  for (var i = 0; i < all.length; i++) {
+    var group = all[i];
+    var filtered = group.categories.filter(function (c) {
+      return cats.indexOf(c) !== -1;
+    });
+    if (filtered.length > 0) {
+      result.push({ name: group.name, categories: filtered });
+    }
+    for (var j = 0; j < group.categories.length; j++) {
+      var c = group.categories[j];
+      if (used.indexOf(c) === -1) {
+        used.push(c);
+      }
+    }
+  }
+
+  var remaining = cats.filter(function (c) {
+    return used.indexOf(c) === -1;
+  });
+
+  if (remaining.length > 0) {
+    result.push({ name: 'そのほか', categories: remaining });
+  }
+
+  return result;
+};
