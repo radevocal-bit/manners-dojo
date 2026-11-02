@@ -78,7 +78,7 @@ Manners.questions.push(
     scene: 'まだ映画を見ていない友だちに会った。',
     art: 'cinema',
     question: '話すときは？',
-    choices: ['結末を話してしまう', 'SNS に結末を書く', '結末は言わずにおく'],
+    choices: ['結末を話してしまう', 'SNSに結末を書く', '結末は言わずにおく'],
     answer: 2,
     explain: '先に結末を知ると、見る楽しみがへります。見ていない人には話しません。'
   },

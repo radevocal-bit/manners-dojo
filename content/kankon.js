@@ -97,7 +97,7 @@ Manners.questions.push(
     category: '冠婚葬祭',
     scene: '新郎と新婦の写真をスマホでとった。',
     art: 'party',
-    question: 'SNS に載せたいときは？',
+    question: 'SNSに載せたいときは？',
     choices: ['すぐに載せる', 'ほかのお客さんの顔もそのまま載せる', '二人に聞いてから載せる'],
     answer: 2,
     explain: '写真を出してよいか、二人にたしかめます。写っているほかの人のことも考えます。'
